@@ -19,6 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
+import com.example.contact.ui.theme.ContactGrayBackground
+import com.example.contact.ui.theme.ContactStarColor
+import com.example.contact.ui.theme.ContactTextPrimary
+import com.example.contact.ui.theme.ContactTextSecondary
 
 data class Contact(
     val name: String,
@@ -124,10 +128,12 @@ fun ContactDetails(contact: Contact) {
             Box(
                 modifier = Modifier
                     .size(120.dp)
-                    .background(Color(0xFF9E9E9E), CircleShape),
+                    .background(ContactGrayBackground, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                val initials = "${contact.name.take(1)}${contact.familyName.take(1)}"
+                val initials = remember(contact.name, contact.familyName) {
+                    "${contact.name.take(1)}${contact.familyName.take(1)}"
+                }
                 Text(
                     text = initials,
                     fontSize = 40.sp,
@@ -143,12 +149,14 @@ fun ContactDetails(contact: Contact) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            val fullName = buildString {
-                append(contact.name)
-                if (contact.surname != null) {
-                    append(" ${contact.surname}")
+            val fullName = remember(contact.name, contact.surname, contact.familyName) {
+                buildString {
+                    append(contact.name)
+                    if (contact.surname != null) {
+                        append(" ${contact.surname}")
+                    }
+                    append(" ${contact.familyName}")
                 }
-                append(" ${contact.familyName}")
             }
 
             Text(
@@ -162,7 +170,7 @@ fun ContactDetails(contact: Contact) {
                 Text(
                     text = "★",
                     fontSize = 28.sp,
-                    color = Color(0xFFFFD700)
+                    color = ContactStarColor
                 )
             }
         }
@@ -186,18 +194,19 @@ fun InfoRow(label: String, value: String) {
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        val formattedLabel = remember(label) { "$label:" }
         Text(
-            text = "$label:",
+            text = formattedLabel,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
             modifier = Modifier.weight(0.3f),
-            color = Color(0xFF666666)
+            color = ContactTextSecondary
         )
         Text(
             text = value,
             fontSize = 16.sp,
             modifier = Modifier.weight(0.7f),
-            color = Color.Black
+            color = ContactTextPrimary
         )
     }
 }
