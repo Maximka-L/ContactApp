@@ -1,5 +1,6 @@
 package com.example.contact
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,21 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
+import com.example.contact.Contact
 import com.example.contact.ui.theme.ContactGrayBackground
 import com.example.contact.ui.theme.ContactStarColor
 import com.example.contact.ui.theme.ContactTextPrimary
 import com.example.contact.ui.theme.ContactTextSecondary
 
-data class Contact(
-    val name: String,
-    val surname: String? = null,
-    val familyName: String,
-    val imageRes: Int? = null,
-    val isFavorite: Boolean = false,
-    val phone: String,
-    val address: String,
-    val email: String? = null,
-)
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
